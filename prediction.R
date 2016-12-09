@@ -15,13 +15,13 @@ svm_model<-svm(class~.,data =data_train,probability=T)
 glm_model<-glm(class~.,data = data_train,family = "binomial")
 
 #读取输入数据，并计算特征值
-#input<-commandArgs(T)
-#drug_input<-as.character(input[1])
-drug_input<-"drug1"
-drug_genes<-c('UBE2Q1', 'RNF14', 'RNF17', 'RNF10', 'RNF13', 'CCDC109B', 'DUOXA2', 'MZT2A', 'MZT2B', 'ATRX', 'PMM1', 'ASS1', 'NCBP1', 'ZNF709', 'RBM141234')
-#for (i in 2:ncol(input)) {
-  #drug_genes[i-1]<-as.character(input[i-1])
-#}
+input<-commandArgs(T)
+drug_input<-as.character(input[1])
+#drug_input<-"drug1"
+#drug_genes<-c('UBE2Q1', 'RNF14', 'RNF17', 'RNF10', 'RNF13', 'CCDC109B', 'DUOXA2', 'MZT2A', 'MZT2B', 'ATRX', 'PMM1', 'ASS1', 'NCBP1', 'ZNF709', 'RBM141234')
+for (i in 2:ncol(input)) {
+ drug_genes[i-1]<-as.character(input[i-1])
+}
 drug_genes_num<-length(intersect(drug_genes,allGeneticTargets))
 if(drug_genes_num>0){
   data_input<-c()
