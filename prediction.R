@@ -37,7 +37,7 @@ if(drug_genes_num>0){
     a<-intersect(disGenes[,i],drug_genes)
     m1<-length(a)
     m2<-m1/drug_genes_num
-    m3<-length(intersect(topGenes,a))
+    m3<-length(intersect(top_gene,a))
     m4<-m3/drug_genes_num
     if(m1!=0){
       tmp<-c(m1,m2,m3,m4,drug_input,dis_name)
