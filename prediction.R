@@ -6,11 +6,12 @@ library(MASS)
 load("scgdrug.RDATA")
 data_train<-read.table(file = "four-two.txt",sep = "\t")
 colnames(data_train)<-c("x1","x2","x3","x4","class")
+data_train$class<-factor(data_train$class)
 
 
 #开始训练模型
 bayes_model<-naiveBayes(class~.,data_train)
-svm_model<-svm(class~.,data_train,probability=T)
+svm_model<-svm(class~.,data =data_train,probability=T)
 glm_model<-glm(class~.,data = data_train,family = "binomial")
 
 #读取输入数据，并计算特征值
@@ -38,7 +39,7 @@ if(drug_genes_num>0){
     m2<-m1/drug_genes_num
     m3<-length(intersect(topGenes,a))
     m4<-m3/drug_genes_num
-    if(m1!=0 && m3!=0){
+    if(m1!=0){
       tmp<-c(m1,m2,m3,m4,drug_input,dis_name)
       data_input<-rbind(data_input,tmp)
     }
@@ -46,8 +47,8 @@ if(drug_genes_num>0){
   feature<-data.frame(x1=as.integer(data_input[,1]),x2=as.numeric(data_input[,2]),x3=as.integer(data_input[,3]),x4=as.numeric(data_input[,4]))
   assoDrugDis <- data.frame(drugs=data_input[,5],diseases=data_input[,6])
   nb<-c(predict(bayes_model,feature,type = "raw")[,2])
-  svm_res<-predict(svm_model,newdata = feature,probability = T)
-  svm<-attr(svm_res,"probabilities")[,2]
+  svm<-predict(svm_model,feature,probability = T)
+  svm<-c(attr(svm,"probabilities")[,2])
   glm<-predict(glm_model,feature,type="response")
   result<-data.frame(assoDrugDis,nb,svm,glm)
   write.table(result,file = "aaa.txt",sep = "\t",row.names = F,col.names = F,quote = F)
