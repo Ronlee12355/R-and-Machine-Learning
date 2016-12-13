@@ -42,10 +42,10 @@ confusionMatrix(titanic_pred,titanic_test$Survived)
 
 #画出roc曲线
 library(ROCR)
-titanic_pred_prob<-predict(titanic_model,titanic_test,type = "prob")[,2]
+titanic_pred_prob<-predict(titanic_model,titanic_test,type = "prob")[,1]
 pred<-prediction(predictions = titanic_pred_prob,labels = titanic_test$Survived)
 pref<-performance(pred,measure = "tpr",x.measure = "fpr")
 plot(pref,main="ROC curve",col="blue",lwd=3)
 auc<-performance(pred,measure = "auc")
 str(auc)
-unlist(auc@y.values)
+unlist(auc@y.values)#计算出auc曲线面积
