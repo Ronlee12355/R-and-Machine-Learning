@@ -12,3 +12,9 @@ plot(lmfit)
 plot(Quartet$x,Quartet$y2)
 fit<-lm(Quartet$y2~Quartet$x+I(Quartet$x^2),data = Quartet)
 summary(fit)
+
+#使用rlm来生成稳健性回归模型，可以除掉孤立点的事情
+library(MASS)
+plot(Quartet$x,Quartet$y3)
+fit1<-rlm(y3~x,data = Quartet)
+abline(fit1,col="red")
