@@ -18,3 +18,10 @@ library(MASS)
 plot(Quartet$x,Quartet$y3)
 fit1<-rlm(y3~x,data = Quartet)
 abline(fit1,col="red")
+
+#glm模型的使用
+data("SLID")
+lmfit_1<-glm(wages~age+sex+education,family = gaussian,data = SLID)
+summary(lmfit_1)
+lmfit_2<-lm(wages~age+sex+education,data = SLID)
+anova(lmfit_1,lmfit_2)
