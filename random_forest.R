@@ -1,0 +1,12 @@
+setwd("E:/deep_learing_R/Machine-Learning-with-R-datasets-master")
+credit<-read.csv(file = "credit.csv")
+library(caret)
+set.seed(300)
+library(C50)
+model<-train(default ~ .,data=credit,method="OneR")
+pre<-predict(model,credit)
+table(pre,credit$default)
+
+library(randomForest)
+set.seed(300)
+m<-randomForest(default~.,data = credit)
