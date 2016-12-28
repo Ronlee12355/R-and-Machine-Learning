@@ -16,3 +16,14 @@ prediction<-predict(model,testset,type = "class")
 table(prediction,testset$churn)
 library(caret)
 confusionMatrix(prediction,testset$churn)
+
+#递归分割树剪枝
+min(model$cptable[,"xerror"])
+which.min(model$cptable[,"xerror"])
+dim(model$cptable)
+model_cp<-model$cptable[8,"CP"]
+prune_tree<-prune(model,cp=model_cp)
+plot(prune_tree,uniform = T)
+text(prune_tree,all = T,use.n = T)
+prediction_modified<-predict(prune_tree,testset,type = "class")
+confusionMatrix(prediction_modified,testset$churn)
