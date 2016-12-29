@@ -25,3 +25,18 @@ lmfit_1<-glm(wages~age+sex+education,family = gaussian,data = SLID)
 summary(lmfit_1)
 lmfit_2<-lm(wages~age+sex+education,data = SLID)
 anova(lmfit_1,lmfit_2)
+
+library(C50)
+data(churn)
+fit<-glm(churn~.,data = trainset,family = binomial)
+summary(fit)
+
+fit2<-glm(churn~international_plan+voice_mail_plan+total_intl_calls
+          +number_customer_service_calls,data = trainset,family = binomial)
+summary(fit2)
+pred<-predict(fit2,testset,type = "response")
+pred<-ifelse(pred>0.5,0,1)
+#pred<-as.factor(pred)
+testset$churn<-ifelse(testset$churn=="yes",1,0)
+library(caret)
+confusionMatrix(table(testset$churn,pred))
