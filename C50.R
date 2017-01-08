@@ -11,7 +11,7 @@ prop.table(table(credit$default))
 credit_model<-C5.0(credit_random_train[,-17],as.factor(credit_random_train[,17]))
 credit_pred<-predict(credit_model,credit_random_test)
 library(gmodels)
-CrossTable(credit_random_test$default,credit_pred,prop.r = F,prop.c = F,prop.chisq = F,dnn = c("actual","predicted"))
+CrossTable(credit_random_test$default,credit_pred,prop.r = False,prop.c = F,prop.chisq = F,dnn = c("actual","predicted"))
 #75%的准确率，只预测出65.6%的违约者
 
 #type2
