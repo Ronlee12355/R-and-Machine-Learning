@@ -39,6 +39,7 @@ plot(titanic_model)
 library(caret)
 titanic_pred<-predict(titanic_model,titanic_test)
 confusionMatrix(titanic_pred,titanic_test$Survived)
+important<-varImp(titanic_model,scale=F)#将变量进行重要性排序
 
 #画出roc曲线
 library(ROCR)
