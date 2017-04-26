@@ -22,3 +22,4 @@ ggplot(data = cabbage_exp,mapping = aes(x=Date,y=Weight,fill=Cultivar))+
   geom_bar(stat = "identity")+guides(fill=guide_legend(reverse = T))
 
 ggplot(data = BOD,mapping = aes(x=Time,y=demand))+geom_line()
+ggplot(tg,aes(x=dose,y=length,color=supp))+geom_line(linetype="dashed")+geom_point(size=2,shape=21)
