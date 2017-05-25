@@ -46,3 +46,13 @@ ggplot(data = cabbage_exp,mapping = aes(x=Date,y=Weight,fill=Cultivar))+
 
 ggplot(data = cabbage_exp,mapping = aes(x=Date,y=Weight,fill=Cultivar))+
   geom_bar(stat = "identity")+guides(fill=guide_legend(reverse = T))
+
+lotting
+library(ggplot2)
+library(gcookbook)
+hg<-heightweight[,c("sex","ageYear","heightIn","weightLb")]
+ggplot(data = hg,aes(x=ageYear,y=heightIn,size=weightLb,color=sex))+geom_point(alpha=0.7)+
+  scale_size_area()+scale_color_brewer(palette = "Set1")
+
+#线性回归
+ggplot(data = heightweight,aes(x=ageYear,y=heightIn))+geom_point()+stat_smooth(method = "lm",level = 0.95)
