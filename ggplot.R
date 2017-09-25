@@ -8,10 +8,6 @@ ggplot(data = uspopchange,mapping = aes(x=Abb,y=Change,fill=Region))+
 geom_bar(stat = "identity",color="red")
 
 library(wordcloud2)
-x=c("么么么","爱你","老婆","想娶你","你真美","你真好","晚安","亲爱的","爱死你","好美","胸好大","啦啦啦")
-y=c(23,45,34,34,56,37,15,56,76,44,22,54)
-siwen<-data.frame(x,y)
-img<-system.file("examples/siwen.png",package = "wordcloud2")
 wordcloud2(demoFreqC,figPath = img,size = 1,color = "random-light")
 wordcloud2(siwen,size = 1,color = "random-light",shape = "'cardioid")
 
