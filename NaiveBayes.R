@@ -1,5 +1,7 @@
 setwd("E:/deep_learing_R/Machine-Learning-with-R-datasets-master")
 library(tm)
+library(caret)
+library(e1071)
 Sys.setlocale(category = "LC_ALL", locale = "us")
 library(wordcloud)
 sms_raw<-read.csv(file="sms_spam.csv",stringsAsFactors = F)
