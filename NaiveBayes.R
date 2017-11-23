@@ -1,5 +1,6 @@
 setwd("E:/deep_learing_R/Machine-Learning-with-R-datasets-master")
 library(tm)
+library(pROC)
 library(caret)
 library(e1071)
 Sys.setlocale(category = "LC_ALL", locale = "us")
