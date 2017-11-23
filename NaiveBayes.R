@@ -37,6 +37,7 @@ sms_test<-apply(sms_test,MARGIN = 2,convert)
 
 model<-naiveBayes(sms_train,sms_raw_train$type,laplace = 1)
 pred<-predict(model,sms_test,type = "raw")
-confusionMatrix(pred,sms_raw_test$type)
+prob<-predict(model,sms_test)
+confusionMatrix(prob,sms_raw_test$type)
 plot.nb<-roc(response=sms_raw_test$type,predictor=pred[,2],levels=levels(sms_raw_test$type))
 plot(plot.nb,type = "S",col="red")
