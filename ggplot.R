@@ -52,3 +52,25 @@ ggplot(data = hg,aes(x=ageYear,y=heightIn,size=weightLb,color=sex))+geom_point(a
 
 #线性回归
 ggplot(data = heightweight,aes(x=ageYear,y=heightIn))+geom_point()+stat_smooth(method = "lm",level = 0.95)
+
+#draw the picture of butterfly
+suppressMessages(library(tidyverse))
+suppressMessages(library(gridExtra))
+suppressMessages(library("showtext"))
+mydata<-data.frame(id=1:14,A=c(5.0,14.7,2.5,8.5,5.1,6.9,7.7,6.8,4.4,4.9,5.3,1.0,0.9,7.8),
+                   B=c(31.3,24.7,17.8,17.2,15.3,14.3,13.9,13.9,12.4,10.0,6.5,4.2,2.5,0.9),
+                   Label=c("Website","Customer & Employee Referral","Webinar","Facebook/Twitter/Other Social","Marketting & Advertising","Paid Serch","Other","Sales generated","Tradeshows","Parter","Linkedin","Events","Lead list","Emial Campaign"))
+p1<-ggplot(mydata,aes(x=id,y=A))+geom_hline(yintercept=mean(mydata$A),linetype=2,size=.25,colour="blue")+geom_bar(stat = "identity",fill="red")+
+  geom_text(aes(x=id,y=-3.3,label=Label),vjust=0.5)+coord_flip()+ylim(-5.5,16)+geom_text(aes(y=A+0.75,label=paste(A,'%')),size=4)+
+  theme_void()
+p2<-ggplot(mydata,aes(x=id,y=-B))+geom_hline(yintercept=-mean(mydata$B),linetype=2,size=.25,colour="grey")+geom_bar(fill="#C44E4C",stat = "identity")+
+  ylim(-40,0)+geom_text(aes(x=id,y=-B-1.8,label=paste(B,'%')),vjust=0.5)+coord_flip()+theme_void()
+
+png("F:/butterfly.png",width = 1300,height =800)
+showtext_begin()
+grid.newpage()
+pushViewport(viewport(layout = grid.layout(7,11)))
+print(p2,vp=viewport(layout.pos.row = 2:7,layout.pos.col = 1:5))
+print(p1,vp=viewport(layout.pos.row = 2:7,layout.pos.col = 6:11))
+showtext_end()
+dev.off()
