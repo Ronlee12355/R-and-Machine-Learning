@@ -1,0 +1,62 @@
+---
+title: "Linear Regression—From Data To Model"
+author: "Ron Lee ronlee12355@outlook.com"
+date: "2018-11-1"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,message = TRUE,warning = FALSE,cache = TRUE)
+```
+
+## Purpose of writing this markdown   
+#### For a long period of time, I have been applying machine learning algorithms to my data with the mature packages for 2 years,I can achieve the model I want but just with little trepidation,simply because I am just a algorithm user,not a person with self-implement capacity.   
+#### So from now on, I decide to implement those machine learning algorithms with raw R codes,in order to make a deeper understanding of them.Wish me good luck.   
+
+
+## Data preparation   
+#### Just like my last markdown, I am gonna use diamonds data set from ggplot2 package.Also this is for linear regression,so I need to remove those categorize variables
+```{r}
+  library(tidyverse,quietly = T)
+  diamonds<-diamonds %>% select_if(is.numeric)
+  diamonds<-apply(diamonds,2,function(x){(x-min(x))/(max(x)-min(x))}) %>% as.data.frame()
+  glimpse(diamonds)
+```
+
+
+## Methods we are gonna use
+### 1. Least square method
+#### For the problem of multiple linear regression,the final expression is Y=Xβ+u,Y is response variable,X is the features,β is parameters and u is random error.   
+The final solution we want is β=(XTX)-1XTY(T means tranpose).
+```{r}
+  ols<-function(y,x){
+    x<-as.matrix(x)
+    x<-cbind(intercept=1,x)
+    return(solve(t(x) %*% x) %*% t(x) %*% y)
+  }
+
+  ols(y=diamonds$price,x=diamonds %>% select(-price)) %>% print()
+```
+
+### 2. Gradient descent algorithm
+#### Honestly speaking,formula Derivation is really not my strength,so I am gonna directly use the already-written formula to show you,here is the [link](https://www.jianshu.com/p/c7e642877b0e)
+
+```{r}
+
+  gradient_descent<-function(x,y,theta,alpha,steps){
+    res<-rep(0,steps)
+    x<-cbind(intercept=1,as.matrix(x))
+    for(i in 1:steps){
+      theta<-theta - alpha * (t(x) %*% (x %*% theta - y))
+      res[i]<-sum((x %*% theta - y)^2)/2
+    }
+    return(list('theta'=theta,'res'=res))
+  }
+  tt<-rep(0,7)
+  result<-gradient_descent(x=diamonds %>% select(-price),y=diamonds$price,theta = tt,alpha = 0.000005,steps = 2000)
+```
+The result we get from the defined function contains two components,one is the theta, the other is error.Let's visualize them.
+```{r}
+  plot(result$res)
+  print(result$theta)
+```
