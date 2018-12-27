@@ -40,7 +40,7 @@ custonKmeans<-function(dataset,k){
     formerPoint = iterPoint
     continue.change=ifelse(all(all.true) == T,F,T)
   }
-  
+  colnames(iterPoint)<-colnames(dataset)
   out=list()
   out[["centers"]]<-iterPoint
   out[["distance"]]<-error.matrix
