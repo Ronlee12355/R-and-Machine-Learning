@@ -1,6 +1,9 @@
 dataset<-iris[,c(1:3)]
 k=3
-custonKmeans<-function(dataset,k){
+custonKmeans<-function(dataset=NA,k=NA){
+  if(is.na(dataset) || is.na(k)){
+    stop("You must input valid parameters!")
+  }
   Eudist<-function(x,y){
     distance<-sqrt(sum((x-y)^2))
     return (distance)
