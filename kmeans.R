@@ -1,5 +1,5 @@
-dataset<-iris[,c(1:3)]
-k=3
+#dataset<-iris[,c(1:3)]
+#k=3
 custonKmeans<-function(dataset=NA,k=NA){
   if(is.na(dataset) || is.na(k)){
     stop("You must input valid parameters!")
